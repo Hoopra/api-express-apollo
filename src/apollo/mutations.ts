@@ -1,25 +1,20 @@
 import { User } from '@model';
 import { generateToken } from 'src/auth/jwt';
+import { users } from 'src/database/users';
 
-const users: { [key: string]: User } = {
+type UserMutation = (root: any, parameters: User, context: any) => Promise<User | null>;
 
-};
-
-type UserMutation = (root: any, parameters: User, context: any) => User | null;
-
-export const createUser: UserMutation = (root, { username, password }) => {
-  let user: User | null = null;
-  if (!users[username]) {
-    user = users[username] = {
-      username,
-      password,
-    };
+export const createUser: UserMutation = async (root, user) => {
+  try {
+    await users.save(user);
+    return user;
+  } catch (error) {
+    return null;
   }
-  return user;
 };
-export const login: UserMutation = (root, { username, password }) => {
-  const user: User | null = users[username];
+export const login: UserMutation = async (root, { username, password }) => {
+  const user = await users.validate(username, password);
   if (!user) { return null; }
-  const token = generateToken(user.username);
-  return user.password === password ? { ...user, token } : null;
+  const token = generateToken(username);
+  return { ...user, token };
 };

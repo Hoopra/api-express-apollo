@@ -1,0 +1,30 @@
+version: '2'
+services:
+  scdb:
+    build:
+      context: ${BASE_DIR}/deploy/dev/db
+    ports:
+    - '5432:5432'
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD : ${POSTGRES_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  scapi:
+    build:
+      context: ${BASE_DIR}
+      dockerfile: deploy/dev/api/Dockerfile
+    ports:
+    - '8000:8000'
+    volumes:
+    - ${BASE_DIR}:/src
+    environment:
+      NODE_ENV: ${ENV}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD : ${POSTGRES_PASSWORD}
+    depends_on:
+    - scdb
+volumes:
+  db-data:

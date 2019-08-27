@@ -22,8 +22,12 @@ export const generateToken = (username: string) => {
 export const validateToken = (token: string): string => {
   const now = Math.floor(Date.now() / 1000);
   if (!token) { return ''; }
-  const decoded: any = jwt.verify(token, publicKey, { algorithms: [algorithm] });
 
-  if (typeof decoded !== 'object') { return ''; }
-  return (decoded.iat < now && decoded.exp > now && decoded.iss === iss) ? decoded.sub : '';
+  try {
+    const decoded: any = jwt.verify(token, publicKey, { algorithms: [algorithm] });
+    if (typeof decoded !== 'object') { return ''; }
+    return (decoded.iat < now && decoded.exp > now && decoded.iss === iss) ? decoded.sub : '';
+  } catch (error) {
+    return '';
+  }
 };
