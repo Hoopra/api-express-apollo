@@ -2,7 +2,7 @@ import fs from 'fs';
 import jwt from 'jsonwebtoken';
 
 const algorithm = 'RS256';
-const iss = 'scoutbase-api'
+const iss = 'scoutbase-api';
 const privateKey = fs.readFileSync('cert/private.key');
 const publicKey = fs.readFileSync('cert/public.key');
 const lifetime = 24 * 3600;

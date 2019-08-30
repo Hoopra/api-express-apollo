@@ -1,6 +1,6 @@
-import { randomInRange } from '@util';
+import { randomInRange } from 'src/util';
 
-export const movies = (root: any, parameters: any, context: any) => { 
+export const movies = (root: any, parameters: any, context: any) => {
   return [{
     title: 'Kill Bill',
     year: 2003,

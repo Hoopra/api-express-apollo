@@ -1,4 +1,4 @@
-import { User } from '@model';
+import { User } from 'src/model';
 import { generateToken } from 'src/auth/jwt';
 import { users } from 'src/database/users';
 

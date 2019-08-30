@@ -1,6 +1,6 @@
-import { User } from '@model';
-import { database } from './pool';
 import bcrypt from 'bcryptjs';
+import { User } from 'src/model';
+import { database } from './pool';
 
 export const users = {
   save: async (user: User) => {

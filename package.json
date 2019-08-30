@@ -6,16 +6,28 @@
     "lint": "tslint --project \"tsconfig.json\"",
     "start": "cross-env ENV_FILE=production node -r ./env -r module-alias/register ./dist/start.js",
     "start-dev": "nodemon --config \"./util/nodemon.json\"",
-    "test": "nodemon --config \"./util/nodemon.test.json\""
+    "test": "npm run build && jest"
   },
-  "_moduleAliases": {
-    "@model": "dist/model",
-    "@server": "dist/server",
-    "@util": "dist/util",
-    "@apollo": "dist/apollo"
+  "jest": {
+    "globals": {
+      "[jest-config].globals.ts-jest.tsConfig": "tsconfig.json"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "moduleNameMapper": {
+      "src(.*)$": "<rootDir>/src$1"
+    },
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "testMatch": [
+      "**/test/**/*.test.(ts|js)"
+    ],
+    "testEnvironment": "node"
   },
   "dependencies": {
-    "@types/graphql": "14.5.0",
     "apollo-server": "2.9.0",
     "apollo-server-express": "2.9.0",
     "bcryptjs": "^2.4.3",
@@ -38,19 +50,24 @@
     "@types/dotenv": "6.1.1",
     "@types/express": "4.17.1",
     "@types/find": "0.2.1",
+    "@types/graphql": "14.5.0",
     "@types/jasmine": "3.4.0",
+    "@types/jest": "^24.0.18",
     "@types/jsonfile": "5.0.0",
     "@types/jsonwebtoken": "^8.3.3",
     "@types/massive": "^5.4.3",
     "@types/morgan": "1.7.37",
     "@types/node": "12.7.2",
-    "@types/supertest": "2.0.8",
+    "@types/supertest": "^2.0.8",
+    "apollo-server-testing": "^2.9.2",
     "find": "0.3.0",
     "fs-extra": "8.1.0",
     "jasmine": "3.4.0",
+    "jest": "^24.9.0",
     "jsonfile": "5.0.0",
     "nodemon": "1.19.1",
-    "supertest": "4.0.2",
+    "supertest": "^4.0.2",
+    "ts-jest": "^24.0.2",
     "ts-node": "8.3.0",
     "tsconfig-paths": "3.8.0",
     "tslint": "5.19.0",
